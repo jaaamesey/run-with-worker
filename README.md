@@ -2,6 +2,8 @@
 
 ## Note: This library is still in a very experimental stage of development. Please excuse the lack of documentation and feel free to report any issues on GitHub.
 
+Wanna just... run a function inside a Web Worker?
+
 ## Background
 Web Workers are great in theory. They finally bring something resembling threads to JS, and allow for arbitary JS to run in a somewhat safe sandbox.
 
@@ -17,6 +19,8 @@ These functions create an ephemeral `Worker` that exists solely for the lifetime
 
 Here's an example:
 ```ts
+import { runInWorker } from 'run-in-worker';
+
 const result = await runInWorker(() => 1 + 1);
 console.log(result); // 2
 ```
