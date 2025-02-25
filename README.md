@@ -12,10 +12,10 @@ They're also tricky to use properly, especially when bundlers are involved. Ther
 ## What this library does
 This library currently exposes two functions:
 
-`runWithWorker`: Allows a synchronous function to run inside a worker, returning a `Promise`.
-`runWithWorkerCallback`: Same as above, but for asynchronous functions. Requires `resolve` or `reject` to be called explicitly, but still returns a `Promise`.
+1. `runWithWorker`: Allows a synchronous function to run inside a worker, returning a `Promise`.
+2. `runWithWorkerCallback`: Same as above, but for asynchronous functions. Requires `resolve` or `reject` to be called explicitly, but still returns a `Promise`.
 
-These functions create an ephemeral `Worker` that exists solely for the lifetime of the task being completed, and sneakily execute the provided function in that `Worker` instead of the main thread.
+These functions create an ephemeral `Worker` that exists solely for the lifetime of the task being completed, and sneakily executes the provided function in that `Worker` instead of the main thread.
 
 Here's an example:
 ```ts
@@ -35,7 +35,21 @@ console.log(result); // 'result'
 
 (`runWithWorker` doesn't currently accept `Promise`s as a return value due to some weirdness with TS and Babel - apologies)
 
+Running multiple `Worker`s simultaneously:
+
+```ts
+Promise.all(
+  [
+    [1, 2],
+    [2, 3],
+    [3, 4],
+    [4, 5],
+  ].map(([a, b]) => runWithWorker((a, b) => a * b, [a, b])),
+).then((r) => alert(r.reduce((acc, c) => acc + c, 0))); // 40
+```
+
 Since `Worker`s have a few ms of spin up time, you'd probably only want to use this for functions that are more computationally intensive.
+
 
 This library should work in both bundled and non-bundled JS environments. It should also be *reasonably* TypeScript friendly. 
 
