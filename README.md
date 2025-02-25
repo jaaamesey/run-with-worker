@@ -1,4 +1,4 @@
-# run-in-worker
+# run-with-worker
 
 ## Note: This library is still in a very experimental stage of development. Please excuse the lack of documentation and feel free to report any issues on GitHub.
 
@@ -12,28 +12,28 @@ They're also tricky to use properly, especially when bundlers are involved. Ther
 ## What this library does
 This library currently exposes two functions:
 
-`runInWorker`: Allows a synchronous function to run inside a worker, returning a `Promise`.
-`runInWorkerCallback`: Same as above, but for asynchronous functions. Requires `resolve` or `reject` to be called explicitly, but still returns a `Promise`.
+`runWithWorker`: Allows a synchronous function to run inside a worker, returning a `Promise`.
+`runWithWorkerCallback`: Same as above, but for asynchronous functions. Requires `resolve` or `reject` to be called explicitly, but still returns a `Promise`.
 
 These functions create an ephemeral `Worker` that exists solely for the lifetime of the task being completed, and sneakily execute the provided function in that `Worker` instead of the main thread.
 
 Here's an example:
 ```ts
-import { runInWorker } from 'run-in-worker';
+import { runInWorker } from 'run-with-worker';
 
-const result = await runInWorker(() => 1 + 1);
+const result = await runWithWorker(() => 1 + 1);
 console.log(result); // 2
 ```
 
 And for something asynchronous:
 ```ts
-const result = await runInWorkerCallback((resolve, reject) => {
+const result = await runWithWorkerCallback((resolve, reject) => {
     setTimeout(() => resolve('result'), 1000);
 });
 console.log(result); // 'result'
 ```
 
-(`runInWorker` doesn't currently accept `Promise`s as a return value due to some weirdness with TS and Babel - apologies)
+(`runWithWorker` doesn't currently accept `Promise`s as a return value due to some weirdness with TS and Babel - apologies)
 
 Since `Worker`s have a few ms of spin up time, you'd probably only want to use this for functions that are more computationally intensive.
 
@@ -52,7 +52,7 @@ As mentioned, functions can't capture their surrounding scope:
 ```ts
 const a = 1;
 const b = 2;
-const result = runInWorker(() => {
+const result = runWithWorker(() => {
     // ❌ Illegal. The Web Worker doesn't know what `a` and `b` are.
     return a + b;
 });
@@ -65,7 +65,7 @@ To get around this, you can pull parameters from a dependency array:
 ```ts
 const a = 1;
 const b = 2;
-const result = runInWorker((a, b) => {
+const result = runWithWorker((a, b) => {
     // ✅ Should work fine. `a` and `b` are passed down as parameters.
     return a + b;
 }, [a, b]);
@@ -73,7 +73,7 @@ const result = runInWorker((a, b) => {
 
 ## Things that might be added in the future
 - For faster spin up times, we should probably expose ways to re-use the same Worker, or use some kind of Worker pool internally.
-- Make `runInWorker` accept an `async` function, as a better alternative to `runInWorkerCallback`. Some build setups have trouble with `async` functions in Web Workers, so that'll need to be explored further first.
+- Make `runWithWorker` accept an `async` function, as a better alternative to `runWithWorkerCallback`. Some build setups have trouble with `async` functions in Web Workers, so that'll need to be explored further first.
 - Proper support for module imports.
 - Lint rules to enforce that inline functions don't capture their surrounding scope.
 

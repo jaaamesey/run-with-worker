@@ -1,7 +1,7 @@
 {
   "name": "run-with-worker",
-  "version": "0.0.1",
-  "description": "Easily run inline functions inside an ephemeral web worker",
+  "version": "0.0.2",
+  "description": "Easily run inline functions with an ephemeral web worker",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

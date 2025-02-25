@@ -2,9 +2,9 @@
  * Runs the provided function in an ephemeral, single-purpose worker.
  * If your function needs to make asynchronous calls, try `runInWorkerCallback` instead.
  */
-export async function runInWorker<T, D extends Readonly<[...any]>>(
+export async function runWithWorker<T, D extends Readonly<[...any]>>(
   /**
-   * Function to run in the worker.
+   * Function to run with the worker.
    * Should adhere to the following rules:
    * - must return a serializable value (e.g. no `Promise`s or functions)
    * - must not read values from outside scope - use `deps` to pass these down instead
@@ -46,10 +46,10 @@ export async function runInWorker<T, D extends Readonly<[...any]>>(
 }
 
 /**
- * Same as `runInWorker`, but for functions that make asynchronous calls.
+ * Same as `runWithWorker`, but for functions that make asynchronous calls.
  * Requires `func` to call `resolve` or `reject` instead of directly returning a result.
  */
-export async function runInWorkerCallback<T, D extends Readonly<[...any]>>(
+export async function runWithWorkerCallback<T, D extends Readonly<[...any]>>(
   func: (
     resolve: (r: T) => void,
     reject: (e: unknown) => void,
