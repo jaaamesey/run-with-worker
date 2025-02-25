@@ -75,6 +75,6 @@ const result = runInWorker((a, b) => {
 - For faster spin up times, we should probably expose ways to re-use the same Worker, or use some kind of Worker pool internally.
 - Make `runInWorker` accept an `async` function, as a better alternative to `runInWorkerCallback`. Some build setups have trouble with `async` functions in Web Workers, so that'll need to be explored further first.
 - Proper support for module imports.
-- Lint rules to enforce that functions don't capture their surrounding scope.
+- Lint rules to enforce that inline functions don't capture their surrounding scope.
 
 

@@ -1,15 +1,17 @@
 {
-  "name": "run-in-worker",
+  "name": "run-with-worker",
   "version": "0.0.1",
   "description": "Easily run inline functions inside an ephemeral web worker",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsup"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "ts-node": "^10.9.2",
+    "tsup": "^8.3.6",
     "typescript": "^5.7.3"
   }
 }
