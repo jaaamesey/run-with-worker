@@ -4,6 +4,9 @@
 
 Wanna just... run a function inside a Web Worker?
 
+## Installation
+`npm i run-with-worker`
+
 ## Background
 Web Workers are great in theory. They finally bring something resembling threads to JS, and allow for arbitary JS to run in a somewhat safe sandbox.
 
