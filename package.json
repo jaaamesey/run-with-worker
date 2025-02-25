@@ -1,6 +1,6 @@
 {
   "name": "run-with-worker",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Easily run inline functions with an ephemeral web worker",
   "main": "dist/",
   "types": "dist/",
