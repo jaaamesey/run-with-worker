@@ -1,6 +1,6 @@
 # run-with-worker
 
-## Note: This library is still in a very experimental stage of development. Please excuse the lack of documentation and feel free to report any issues on GitHub.
+## Note: This library is still in a very experimental stage of development. Please excuse the lack of documentation and feel free to report any issues on [GitHub](https://github.com/jaaamesey/run-with-worker).
 
 Wanna just... run a function inside a Web Worker?
 
