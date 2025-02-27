@@ -122,6 +122,7 @@ const result = runWithWorker(
 export function runTask() {
     return 'Hello!';
 }
+// Don't forget to add this to the module you're importing!
 export const _$trustedScriptUrl = import.meta.url;
 ```
 
