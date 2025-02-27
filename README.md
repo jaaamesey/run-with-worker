@@ -4,6 +4,10 @@
 
 Wanna just... run a function inside a Web Worker?
 
+...in a type safe way?
+
+...with support for dynamic `import`s, returning `Promise`s, and timeouts?
+
 ## Installation
 
 `npm i run-with-worker`
@@ -24,7 +28,7 @@ Here's an example:
 ```ts
 import { runWithWorker } from 'run-with-worker';
 
-const result = await runWithWorker(() => 1 + 1);
+const result = await runWithWorker(() => 1 + 1); // TypeScript knows this is a `number`
 console.log(result); // 2
 ```
 
@@ -55,8 +59,6 @@ Promise.all(
 ```
 
 Since `Worker`s introduce a few ms of overhead, you'd probably only want to use this for functions that are more computationally intensive.
-
-This library should work in both bundled and non-bundled JS environments. It should also be reasonably TypeScript friendly. 
 
 ## Limitations
 
@@ -99,8 +101,8 @@ A lot of build setups these days will have problems when trying to run this kind
 
 ```ts
 const result = runWithWorker(() => 
-	//  ❌ May throw TypeError: Failed to resolve module specifier
-	import('./module').then(module => module.runTask());
+    //  ❌ May throw TypeError: Failed to resolve module specifier
+    import('./module').then(module => module.runTask());
 );
 ```
 
@@ -108,8 +110,8 @@ This library supports an alternative solution to this. If you instead use the de
 
 ```ts
 const result = runWithWorker(
-	module => module.runTask(),
-	[import('./module')],
+    module => module.runTask(),
+    [import('./module')],
 ); // 'Hello!'
 ```
 
@@ -118,7 +120,7 @@ const result = runWithWorker(
 ```ts
 /// ./module.ts
 export function runTask() {
-	return 'Hello!';
+    return 'Hello!';
 }
 export const _$trustedScriptUrl = import.meta.url;
 ```
@@ -131,7 +133,9 @@ Code you want to run only in the Worker needs to be put inside an exported funct
 
 ## Timeouts and cancelling tasks
 
-A useful thing about Web Workers is that you can terminate them even if they've hanged. Here's how to terminate a task after a certain length of time:
+A useful thing about Web Workers is that you can terminate them even if they've hanged.
+
+Here's how to terminate a task after a certain length of time:
 
 ```ts
 // Worker will be terminated if it takes more than one second to execute,
@@ -146,15 +150,15 @@ runWithWorker(
 ```
 
 You can also manually terminate the Worker like so:
+
 ```ts
 const task = runWithWorker(
     () => {
       while (true) {}
-    }
+    },
 );
 setTimeout(() => task.cancel(), 1000);
 // If you're transforming the returned `Promise` with a `.then()` or something,
 // make sure the `cancel()` call is still running on the root `Promise`.
-const res = await task.then(...)
-
+const res = await task.then(...);
 ```
