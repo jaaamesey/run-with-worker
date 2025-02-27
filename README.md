@@ -58,7 +58,7 @@ Since `Worker`s can have up to a millisecond of spin up time, you'd probably onl
 
 This library should work in both bundled and non-bundled JS environments. It should also be *reasonably* TypeScript friendly. 
 
-### Limitations
+## Limitations
 
 - **Functions cannot capture values or other functions from their surrounding scope.** You'll need to pass down a dependency array to get around this, or call functions from a dynamically imported module. See "Dealing with external values" and "Importing modules".
 - Some build setups may have trouble with using `async/await` syntax inside the worker function. `.then()` syntax should work fine almost everywhere though.
@@ -66,7 +66,7 @@ This library should work in both bundled and non-bundled JS environments. It sho
 - Functions are subject to all normal limitations of code that runs inside Web Workers (e.g. **no DOM operations**).
 - Return values and anything in the dependency array (aside from modules) must be compatible with `structuredClone`.
 
-### Dealing with external values
+## Dealing with external values
 As mentioned, functions can't capture their surrounding scope:
 
 ```ts
