@@ -1,7 +1,7 @@
 {
   "name": "run-with-worker",
-  "version": "0.0.5",
-  "description": "Easily run inline functions with an ephemeral web worker",
+  "version": "1.0.1",
+  "description": "Easily run inline and imported functions within an ephemeral web worker",
   "main": "dist/",
   "types": "dist/",
   "scripts": {
