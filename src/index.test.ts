@@ -57,6 +57,4 @@ it("can't access outer scope", async () => {
 it("runs on other thread", async () => {
   expect(Bun.isMainThread).toBe(true);
   expect(await runWithWorker(() => Bun.isMainThread)).toBe(false);
-  const x = 1;
-  expect(await runWithWorker(() => x).catch(() => "threw")).toBe("threw");
 });
