@@ -6,7 +6,8 @@
   "types": "dist/",
   "scripts": {
     "test": "bun test",
-    "build": "tsup"
+    "build": "tsup",
+    "publish": "bun publish"
   },
   "author": "James Karlsson",
   "license": "MIT",
