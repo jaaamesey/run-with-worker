@@ -12,9 +12,12 @@ Wanna just... run a function inside a Web Worker?
 
 `npm i run-with-worker`
 
+Or, if you're not using a bundler, downloading [/dist/index.mjs](https://raw.githubusercontent.com/jaaamesey/run-with-worker/refs/heads/main/dist/index.mjs) and renaming it to something nicer should work too (assuming where you want to use this is within a [JS module](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)).
+
+
 ## Background
 
-Web Workers are great in theory. They finally bring something resembling threads to JS, and allow for arbitrary JS to run in a somewhat isolated sandbox.
+[Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers) are wonderful little things. They finally bring something resembling threads to JS, and allow for arbitrary JS to run in a somewhat isolated sandbox.
 
 They're also tricky to use properly, especially when bundlers are involved. There's no easy way to just *run a single task* in one, and it's hard to work with them in a type safe way.
 
@@ -128,13 +131,13 @@ export const _$trustedScriptUrl = import.meta.url;
 
 ...that module will be loaded on the main thread, and then *forwarded* to the Worker.
 
-`import.meta.url` is a string that identifies where a module file actually lives at runtime. This must be provided through `_$trustedScriptUrl` for things like function calls to work correctly. If your build setup doesn't support `import.meta.url`, you may need to replace it with some equivalent, or make sure ESM is enabled.
+[`import.meta.url`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import.meta#url) is a string that identifies where a module file actually lives at runtime. This must be provided through `_$trustedScriptUrl` for things like function calls to work correctly. If your build setup doesn't support `import.meta.url`, you may need to replace it with some equivalent, or make sure ESM is enabled.
 
 Code you want to run only in the Worker needs to be put inside an exported function, e.g. `runTask()`. **Make sure you trust whatever modules you provide in the dependency array, as any *top-level* code there will run on *both* the main thread and the Worker.** For code from known URLs or strings, you should be able to make use of `import()` or `eval()` inside the worker function instead.
 
 ## Timeouts and cancelling tasks
 
-A useful thing about Web Workers is that you can terminate them from the outside when they've hanged.
+A useful thing about Web Workers is that you can terminate them from the outside when they've hanged, or otherwise taken too long to do something.
 
 Here's how to terminate a task after a certain length of time:
 
