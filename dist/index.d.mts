@@ -1,4 +1,8 @@
-declare function runWithWorker<T, D extends Readonly<[...any]>>(func: (...deps: {
+type ExtraReturnFields = {
+    cancel: () => void;
+    worker: Worker;
+};
+declare function runWithWorker<T, D extends Readonly<[...any]>>(task: (...deps: {
     [i in keyof D]: Awaited<D[i]> extends infer R extends Record<string, unknown> ? R extends {
         _$trustedScriptUrl: string;
     } ? Awaited<D[i]> : {
@@ -8,6 +12,11 @@ declare function runWithWorker<T, D extends Readonly<[...any]>>(func: (...deps: 
     } : Awaited<D[i]>;
 } & Array<any>) => T, deps?: Readonly<[...D]>, opts?: {
     workerOptions?: WorkerOptions;
-}): Promise<T>;
+    executionTimeoutMs?: number;
+}): Promise<T> & ExtraReturnFields;
+declare class TaskCancellationError extends Error {
+}
+declare class TaskTimeoutError extends Error {
+}
 
-export { runWithWorker };
+export { TaskCancellationError, TaskTimeoutError, runWithWorker };

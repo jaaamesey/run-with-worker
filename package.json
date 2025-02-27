@@ -1,13 +1,12 @@
 {
   "name": "run-with-worker",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Easily run inline and imported functions within an ephemeral web worker",
   "main": "dist/",
   "types": "dist/",
   "scripts": {
     "test": "bun test",
-    "build": "tsup",
-    "publish": "tsup && bun publish"
+    "build": "tsup"
   },
   "author": "James Karlsson",
   "license": "MIT",
