@@ -14,7 +14,7 @@ Wanna just... run a function inside a Web Worker?
 
 ## Background
 
-Web Workers are great in theory. They finally bring something resembling threads to JS, and allow for arbitary JS to run in a somewhat isolated sandbox.
+Web Workers are great in theory. They finally bring something resembling threads to JS, and allow for arbitrary JS to run in a somewhat isolated sandbox.
 
 They're also tricky to use properly, especially when bundlers are involved. There's no easy way to just *run a single task* in one, and it's hard to work with them in a type safe way.
 
