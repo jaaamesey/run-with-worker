@@ -129,4 +129,32 @@ export const _$trustedScriptUrl = import.meta.url;
 
 Code you want to run only in the Worker needs to be put inside an exported function, e.g. `runTask()`. **Make sure you trust whatever modules you provide in the dependency array, as any *top-level* code there will run on *both* the main thread and the Worker.** For code from known URLs or strings, you should be able to make use of `import()` or `eval()` inside the worker function instead.
 
+## Timeouts and cancelling tasks
 
+A useful thing about Web Workers is that you can terminate them even if they've hanged. Here's how to terminate a task after a certain length of time:
+
+```ts
+// Worker will be terminated if it takes more than one second to execute,
+// and returned `Promise` will be rejected.
+runWithWorker(
+    () => {
+      while (true) {}
+    },
+    [],
+    { executionTimeoutMs: 1000 },
+); 
+```
+
+You can also manually terminate the Worker like so:
+```ts
+const task = runWithWorker(
+    () => {
+      while (true) {}
+    }
+);
+setTimeout(() => task.cancel(), 1000);
+// If you're transforming the returned `Promise` with a `.then()` or something,
+// make sure the `cancel()` call is still running on the root `Promise`.
+const res = await task.then(...)
+
+```
