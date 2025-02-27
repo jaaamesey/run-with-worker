@@ -54,9 +54,9 @@ Promise.all(
 ).then((r) => alert(r.reduce((acc, c) => acc + c, 0))); // 40
 ```
 
-Since `Worker`s can have up to a millisecond of spin up time, you'd probably only want to use this for functions that are more computationally intensive.
+Since `Worker`s introduce a few ms of overhead, you'd probably only want to use this for functions that are more computationally intensive.
 
-This library should work in both bundled and non-bundled JS environments. It should also be *reasonably* TypeScript friendly. 
+This library should work in both bundled and non-bundled JS environments. It should also be reasonably TypeScript friendly. 
 
 ## Limitations
 
@@ -127,4 +127,6 @@ export const _$trustedScriptUrl = import.meta.url;
 
 `import.meta.url` is a string that identifies where a module file actually lives at runtime. This must be provided through `_$trustedScriptUrl` for things like function calls to work correctly. If your build setup doesn't support `import.meta.url`, you may need to replace it with some equivalent, or make sure ESM is enabled.
 
-Code you want to run only in the Worker needs to be put inside an exported function, e.g. `runTask()`. **Make sure you trust whatever modules you provide in the dependency array, as any *top-level* code there will run on *both* the main thread and the Worker.** For code from known URLs or strings, you should be able to make use of `import()` or `eval()` inside the worker function itself anyway.
+Code you want to run only in the Worker needs to be put inside an exported function, e.g. `runTask()`. **Make sure you trust whatever modules you provide in the dependency array, as any *top-level* code there will run on *both* the main thread and the Worker.** For code from known URLs or strings, you should be able to make use of `import()` or `eval()` inside the worker function instead.
+
+
