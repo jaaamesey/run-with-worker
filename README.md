@@ -20,9 +20,9 @@ They're also tricky to use properly, especially when bundlers are involved. Ther
 
 ## What this library does
 
-This library currently exposes a `runWithWorker` function. This function allows a provided function to run inside a worker, and returns a `Promise` wrapping the result of that function.
+You can use `runWithWorker` to easily run a function inside a worker, which will return a `Promise` wrapping the result of that function.
 
-This works by creating an ephemeral `Worker` that exists solely for the lifetime of the task being completed, and sneakily executing the provided function in that `Worker` instead of the main thread.
+This works by creating an ephemeral `Worker` that exists solely for the lifetime of the task being completed, and sneakily executing the provided function in said `Worker` instead of the main thread.
 
 Here's an example:
 ```ts
@@ -133,7 +133,7 @@ Code you want to run only in the Worker needs to be put inside an exported funct
 
 ## Timeouts and cancelling tasks
 
-A useful thing about Web Workers is that you can terminate them even if they've hanged.
+A useful thing about Web Workers is that you can terminate them from the outside when they've hanged.
 
 Here's how to terminate a task after a certain length of time:
 
