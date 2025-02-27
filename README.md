@@ -1,6 +1,6 @@
 # run-with-worker
 
-*Note: This library is still in a very experimental stage of development. Please excuse the lack of documentation and feel free to report any issues on [GitHub](https://github.com/jaaamesey/run-with-worker).*
+*Note: This library is still in a very experimental stage of development. Feel free to report any issues [here](https://github.com/jaaamesey/run-with-worker/issues).*
 
 Wanna just... run a function inside a Web Worker?
 
@@ -12,7 +12,7 @@ Wanna just... run a function inside a Web Worker?
 
 `npm i run-with-worker`
 
-Or, if you're not using a bundler, downloading [/dist/index.mjs](https://raw.githubusercontent.com/jaaamesey/run-with-worker/refs/heads/main/dist/index.mjs) and renaming it to something nicer should work too (assuming where you want to use this is within a [JS module](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)).
+*Or, if you're not using a bundler, downloading [/dist/index.mjs](https://raw.githubusercontent.com/jaaamesey/run-with-worker/refs/heads/main/dist/index.mjs) and renaming it to something nicer should work too (assuming where you want to use this is within a [JS module](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)).*
 
 
 ## Background
