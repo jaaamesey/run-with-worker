@@ -7,7 +7,7 @@
   "scripts": {
     "test": "bun test",
     "build": "tsup",
-    "publish": "bun publish"
+    "publish": "tsup && bun publish"
   },
   "author": "James Karlsson",
   "license": "MIT",
