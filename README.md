@@ -61,7 +61,9 @@ Promise.all(
 ).then((r) => alert(r.reduce((acc, c) => acc + c, 0))); // 40
 ```
 
-Since `Worker`s introduce a few ms of overhead, you'd probably only want to use this for functions that are more computationally intensive.
+(consider [parra](https://github.com/jaaamesey/parra) if you're using this for parallel computation!)
+
+Since `Worker`s introduce a few ms of overhead, you'd probably only want to use them for functions that are more computationally intensive.
 
 ## Limitations
 
